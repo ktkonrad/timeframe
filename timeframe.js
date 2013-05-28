@@ -297,21 +297,21 @@ function Timeframe() {
 
   this.eventClick = function(event) {
     var el;
-    if (el = $(event.toElement).closest('a.timeframe_button'))
+    if (el = $(event.target).closest('a.timeframe_button'))
       me.handleButtonClick(event, el);
   };
 
   this.eventMouseDown = function(event) {
     var el, em;
-    el = $(event.toElement).closest('span.clear')
+    el = $(event.target).closest('span.clear')
     if (el.length) {
       el.find('span').addClass('active');
-      em = $(event.toElement).closest('td.selectable')
+      em = $(event.target).closest('td.selectable')
       if (em.length) {
         me.handleDateClick(em, true);
       }
-    } else { 
-      el = $(event.toElement).closest('td.selectable')
+    } else {
+      el = $(event.target).closest('td.selectable')
       if (el.length) {
         me.handleDateClick(el);
       }
@@ -379,9 +379,9 @@ function Timeframe() {
     var el;
     if (!me.dragging)
       me.toggleClearButton(event);
-    else if ($(event.toElement).closest('span.clear span.active').length);
+    else if ($(event.target).closest('span.clear span.active').length);
     else {
-      el = $(event.toElement).closest('td.selectable')
+      el = $(event.target).closest('td.selectable')
       if (el.length) {
         window.clearInterval(me.timer);
         if (el.attr('id') == me.lastDayId) {
@@ -411,7 +411,7 @@ function Timeframe() {
 
   this.toggleClearButton = function(event) {
     var el;
-      if (/*event.element().ancestors && */$(event.toElement).closest('td.selected').length) {
+      if (/*event.element().ancestors && */$(event.target).closest('td.selected').length) {
       el = me.element.find('#' + me.calendars[0].attr('id') +  ' .pre.selected').first();
       if (!el.length) el = me.element.find('.active.selected').first();
       if (!el.length) el = me.element.find('.post.selected').first();
@@ -458,7 +458,7 @@ function Timeframe() {
           start = new Date(me.startdrag);
           start.setDate(start.getDate() - range);
           flag = start < me.earliest;
-        }        
+        }
         if (flag) {
           start = new Date(me.startdrag);
           end = new Date(me.startdrag);
@@ -477,7 +477,7 @@ function Timeframe() {
       if (me.timer) {
         clearInterval(me.timer);
       }
-      if ($(event.toElement).closest('span.clear span.active').length) {
+      if ($(event.target).closest('span.clear span.active').length) {
         me.clearRange();
       } else if ('onFinished' in me.options) {
         me.options['onFinished']();
@@ -529,8 +529,8 @@ function Timeframe() {
   };
 
   this.handleMouseMove = function(event) {
-    if ($(event.toElement).closest('#' + me.element.attr('id') + ' td')) window.getSelection().removeAllRanges(); // More Opera trickery
-   
+    if ($(event.target).closest('#' + me.element.attr('id') + ' td')) window.getSelection().removeAllRanges(); // More Opera trickery
+
   };
 }
 
@@ -550,7 +550,7 @@ $.extend(Date.prototype, {
     var day = me.getDay(), month = me.getMonth();
     var hours = me.getHours(), minutes = me.getMinutes();
     function pad(num) { return num < 10 ? '0'+num : ''+num; };
-      
+
     return format.replace(/\%([aAbBcdHImMpsSwyY])/g, function(part) {
       switch(part[1]) {
         case 'a': return Locale['dayNames'][day].substring(0, 3); break;

@@ -77,7 +77,7 @@
     </p>
     <pre><code>
       var timeframe = new Timeframe();
-      timeframe.initialize(window.calendars, {
+      timeframe.initialize($('#calendars'), {
         earliest: new Date(),
         resetButton: $('#reset'),
         startField: $('#start'),
@@ -118,7 +118,7 @@
   <script type="text/javascript" charset="utf-8">
     //<![CDATA[
     var timeframe = new Timeframe();
-    timeframe.initialize(window.calendars, {
+    timeframe.initialize($('#calendars'), {
         earliest: new Date(),
         resetButton: $('#reset'),
         startField: $('#start'),
